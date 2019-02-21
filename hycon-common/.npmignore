@@ -1,0 +1,9 @@
+.vscode
+lib/
+proto/
+types/
+node_modules/
+tsconfig.json
+tslint.json
+coverage/
+test/

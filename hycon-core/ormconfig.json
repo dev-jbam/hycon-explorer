@@ -1,0 +1,42 @@
+[
+    {
+        "name": "readwrite",
+        "type": "mysql",
+        "host": "",
+        "port": 3306,
+        "username": "",
+        "password": "",
+        "database": "",
+        "charset": "utf8mb4",
+        "synchronize": true,
+        "logger": "file",
+        "logging": [
+            "error",
+            "schema"
+        ],
+        "entities": [
+            "./node_modules/hycon-common/dbmanager/entity/**Entity.js"
+        ]
+    },
+    {
+        "name": "default",
+        "type": "mysql",
+        "host": "",
+        "port": 3306,
+        "cache": true,
+        "username": "",
+        "password": "",
+        "database": "",
+        "charset": "utf8mb4",
+        "synchronize": true,
+        "logger": "file",
+        "logging": [
+            "error",
+            "query",
+            "schema"
+        ],
+        "entities": [
+            "./node_modules/hycon-common/dbmanager/entity/**Entity.js"
+        ]
+    }
+]

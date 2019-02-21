@@ -1,0 +1,35 @@
+{
+    "name": "hycon-rest",
+    "version": "0.0.1",
+    "description": "HYCON rest server",
+    "main": "main.js",
+    "scripts": {
+        "start": "./node_modules/.bin/ts-node src/main.ts",
+        "debug-api": "./node_modules/.bin/ts-node --inspect=9232 --inspect-brk src/main.ts",
+        "monitor": "./node_modules/.bin/nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts"
+    },
+    "author": "Team HYCON",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/body-parser": "^1.17.0",
+        "@types/express": "^4.16.0",
+        "@types/node": "^10.3.1",
+        "@types/node-fetch": "^2.1.2",
+        "nodemon": "^1.18.3",
+        "ts-node": "4.0.1",
+        "tslint": "^5.10.0",
+        "typescript": "^2.9.1"
+    },
+    "dependencies": {
+        "@types/connect-timeout": "0.0.33",
+        "@types/express-rate-limit": "^2.9.3",
+        "body-parser": "^1.18.3",
+        "connect-timeout": "^1.9.0",
+        "express": "^4.16.3",
+        "express-rate-limit": "^2.11.0",
+        "hycon-common": "../hycon-common",
+        "log4js": "git+https://github.com/Team-Hycon/log4js-node.git",
+        "mysql": "^2.16.0",
+        "node-fetch": "^2.2.0"
+    }
+}

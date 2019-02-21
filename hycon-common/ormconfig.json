@@ -1,0 +1,62 @@
+[
+    {
+        "name": "readonly",
+        "type": "mysql",
+        "host": "",
+        "port": 3306,
+        "username": "",
+        "password": "",
+        "database": "",
+        "charset": "utf8mb4",
+        "synchronize": true,
+        "logger": "file",
+        "logging": [
+            "error",
+            "query",
+            "schema"
+        ],
+        "entities": [
+            "../hycon-common/lib/dbmanager/entity/**Entity.ts"
+        ]
+    },
+    {
+        "name": "readwrite",
+        "type": "mysql",
+        "host": "",
+        "port": 3306,
+        "username": "",
+        "password": "",
+        "database": "",
+        "charset": "utf8mb4",
+        "synchronize": true,
+        "logger": "file",
+        "logging": [
+            "error",
+            "schema"
+        ],
+        "entities": [
+            "../hycon-common/lib/dbmanager/entity/**Entity.ts"
+        ]
+    },
+    {
+        "name": "default",
+        "type": "mysql",
+        "host": "",
+        "port": 3306,
+        "cache": true,
+        "username": "",
+        "password": "",
+        "database": "",
+        "charset": "utf8mb4",
+        "synchronize": true,
+        "logger": "file",
+        "logging": [
+            "error",
+            "query",
+            "schema"
+        ],
+        "entities": [
+            "../hycon-common/lib/dbmanager/entity/**Entity.ts"
+        ]
+    }
+]

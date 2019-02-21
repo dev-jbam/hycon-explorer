@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es6",
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "declaration": true,
+        "outDir": "dist",
+        "sourceMap": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./types"
+        ],
+        "jsx": "react"
+    },
+    "include": [
+        "./lib/**/*",
+    ],
+    "exclude": [
+        "node_modules",
+    ]
+}

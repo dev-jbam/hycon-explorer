@@ -1,0 +1,6 @@
+coverage
+node_modules
+proto.d.ts-e
+ormlogs.log
+dist/
+logs/

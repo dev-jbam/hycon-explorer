@@ -7,6 +7,8 @@ import { userOptions } from "../main"
 import { Server } from "../server"
 
 // tslint:disable-next-line:no-var-requires
+const assert = require("assert")
+const logger = getLogger("AppTxPool")
 
 interface ITxQueue {
     sum: Long,
@@ -147,11 +149,11 @@ export class TxPool {
         this.pool.resort()
     }
 
-    public getTxs(count: number): SignedTx[] {
+    public getTxs(count?: number): SignedTx[] {
         const txs: SignedTx[] = []
         for (const txqueue of this.pool.toArray()) {
             for (let i = 0; i < txqueue.queue.length(); i++) {
-                if (txs.length >= count) { return txs }
+                if (count !== undefined && txs.length >= count) { return txs }
                 const tx = txqueue.queue.peek(i)
                 txs.push(tx)
             }
@@ -182,7 +184,7 @@ export class TxPool {
     }
 
     // getAllPendingAddress is for all direction pending txs.
-    public getAllPendingAddress(address: Address): { pendings: SignedTx[], pendingAmount: Long } {
+    public getAllPendingAddress(address: Address, count?: number): { pendings: SignedTx[], pendingAmount: Long } {
         let pendingAmount = Long.UZERO
         const pendings: SignedTx[] = []
         for (const txqueue of this.pool.toArray()) {
@@ -193,6 +195,9 @@ export class TxPool {
                     pendings.push(tx)
                 } else if (tx.to.equals(address)) {
                     pendings.push(tx)
+                }
+                if (count !== undefined && pendings.length >= count) {
+                    return { pendings, pendingAmount }
                 }
             }
         }

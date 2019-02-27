@@ -1,5 +1,6 @@
-import { AsyncLock, Hash } from "hycon-common"
-import { Address, AnyBlock, BlockHeader, GenesisSignedTx, PrivateKey, proto, SignedTx, Tx } from "hycon-common"
+import { getMnemonic, hyconfromString, hycontoString, strictAdd, strictSub, zeroPad } from "@glosfer/hyconjs-util"
+import { Address } from "hycon-common"
+import { AnyBlock, AsyncLock, BlockHeader, GenesisSignedTx, Hash, PrivateKey, SignedTx } from "hycon-common"
 import { getLogger } from "log4js"
 import * as Long from "long"
 import { TxPool } from "../../common/txPool"
@@ -15,13 +16,12 @@ import { Bitbox } from "../../wallet/bitbox"
 import { Ledger } from "../../wallet/ledger"
 import { Wallet } from "../../wallet/wallet"
 import { IBlock, ICreateWallet, IHyconWallet, IMinedInfo, IMiner, IPeer, IResponseError, ITxProp, IWalletAddress } from "../client/rest"
-import { hyconfromString, hycontoString, strictAdd, strictSub, zeroPad } from "../client/stringUtil"
-const logger = getLogger("RestServer")
+const logger = getLogger("RestV1Service")
 
 // tslint:disable:object-literal-sort-keys
 // tslint:disable:ban-types
 // tslint:disable:no-bitwise
-export class RestServer {
+export class RestV1Service {
     private consensus: Consensus
     private txPool: TxPool
     private network: Network
@@ -432,7 +432,7 @@ export class RestServer {
 
     public async getBlockAtHeight(height: number): Promise<IBlock | IResponseError> {
         try {
-            const blockResult = await this.consensus.getBlockAtHeight(height)
+            const blockResult = await this.consensus.getBlockAtHeight(Number(height))
             if (blockResult === undefined) {
                 return Promise.resolve({
                     status: 404,
@@ -546,7 +546,7 @@ export class RestServer {
 
                 const account = await this.consensus.getAccount(address)
                 const pendings = this.txPool.getOutPendingAddress(address)
-                let pendingAmount = Long.fromNumber(0)
+                let pendingAmount = Long.UZERO
                 for (const pending of pendings) {
                     pendingAmount = strictAdd(pendingAmount, strictAdd(pending.amount, pending.fee))
                 }
@@ -575,7 +575,7 @@ export class RestServer {
             for (const address of addresses) {
                 const account = await this.consensus.getAccount(address)
                 const pendings = this.txPool.getOutPendingAddress(address)
-                let pendingAmount = Long.fromNumber(0)
+                let pendingAmount = Long.UZERO
                 for (const pending of pendings) {
                     pendingAmount = strictAdd(pendingAmount, strictAdd(pending.amount, pending.fee))
                 }
@@ -608,7 +608,7 @@ export class RestServer {
                     const address = new Address(wallet.address)
                     const account = await this.consensus.getAccount(address)
                     const pendings = this.txPool.getOutPendingAddress(address)
-                    let pendingAmount = Long.fromNumber(0, true)
+                    let pendingAmount = Long.UZERO
                     for (const pending of pendings) {
                         pendingAmount = strictAdd(pendingAmount, strictAdd(pending.amount, pending.fee))
                     }
@@ -942,7 +942,7 @@ export class RestServer {
             for (const address of addresses) {
                 const account = await this.consensus.getAccount(address)
                 const pendings = this.txPool.getOutPendingAddress(address)
-                let pendingAmount = Long.fromNumber(0)
+                let pendingAmount = Long.UZERO
                 for (const pending of pendings) {
                     pendingAmount = strictAdd(pendingAmount, strictAdd(pending.amount, pending.fee))
                 }

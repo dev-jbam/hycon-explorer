@@ -37,7 +37,7 @@ export class Network {
     }
 
     public networkid: string = "hycon"
-    public readonly version: number = 13
+    public readonly version: number = 14
     public port: number
     public publicPort: number
     public guid: string // unique id to prevent self connecting
@@ -213,6 +213,10 @@ export class Network {
                 }
             })
         })
+    }
+
+    public getPeerDatabase() {
+        return this.peerDatabase
     }
 
     private async accept(socket: net.Socket): Promise<void> {

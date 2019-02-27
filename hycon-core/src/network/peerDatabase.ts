@@ -2,6 +2,7 @@ import { AsyncLock, Hash, proto } from "hycon-common"
 import { getLogger } from "log4js"
 import "reflect-metadata"
 import { Connection, createConnection } from "typeorm"
+import { RESPONSE_CODE, Responser } from "../api/router/responser"
 import { Network } from "./network"
 import { PeerModel } from "./peerModel"
 const logger = getLogger("PeerDb")
@@ -229,4 +230,20 @@ export class PeerDatabase {
     public getAll(): Promise<PeerModel[]> {
         return this.connection.manager.find(PeerModel)
     }
+
+    public async getPeers(limit: number = 1) {
+        try {
+            return await this.connection.createQueryBuilder(PeerModel, "PeerModel")
+                .orderBy("active", "DESC")
+                .addOrderBy("lastSeen", "DESC")
+                .addOrderBy("host", "ASC")
+                .addOrderBy("port", "ASC")
+                .limit(limit)
+                .getMany()
+        } catch (e) {
+            logger.error(`FAILED getPeers: ${e.stack}`)
+            return Responser.makeJsonError(RESPONSE_CODE.INTERNAL_SERVER_ERROR, `error occurs while doing getPeers(${limit}) ${e}`)
+        }
+    }
+
 }
